@@ -1,16 +1,18 @@
 # Project Status
 
 **Last updated:** 2026-09-22  
-**Current phase:** Initialization + Phase 1 — Business and competitor research  
+**Current phase:** Phase 1 — Business and competitor research  
 **Current authorization:** Planning and Phase 1 research only  
-**Current task:** Initialize governance, task graph, GitHub/Kanban, and begin independently scoped Phase 1 research  
-**Board:** `website-business` (to be created during initialization)  
-**Repository:** local initialization in progress; remote to be recorded after verified creation
+**Current task:** Parallel competitor, customer-segment, and business-model research  
+**Board:** `website-business`  
+**Repository:** `https://github.com/pupontech/website-business` (private, default branch `main`)
 
 ## Completed tasks
 
 - Project brief accepted as the governing scope.
 - Initial constraints and approval checkpoints recorded.
+- Planning repository initialized locally and pushed to the verified private GitHub remote.
+- Governance documents, complete dependency-aware task breakdown, OpenSpec policy, Kanban graph, and three protected owner gates created and verified.
 
 ## Blockers
 
@@ -32,18 +34,18 @@ Status vocabulary: `DONE`, `ACTIVE`, `READY`, `BLOCKED`, `FUTURE`.
 
 | ID | Task | Depends on | Status |
 |---|---|---|---|
-| P0.1 | Initialize repository and required governing documents | — | ACTIVE |
-| P0.2 | Initialize Git, private GitHub repository, and branch protections/governance baseline appropriate to a planning repo | P0.1 | READY |
-| P0.3 | Create Kanban board and dependency-aware phase/task cards | P0.1 | READY |
-| P0.4 | Verify repository structure, card graph, permissions, and status/update protocol | P0.2, P0.3 | READY |
+| P0.1 | Initialize repository and required governing documents | — | DONE |
+| P0.2 | Initialize Git and private GitHub repository | P0.1 | DONE |
+| P0.3 | Create Kanban board and dependency-aware phase/task cards | P0.1 | DONE |
+| P0.4 | Verify repository structure, card graph, permissions, and status/update protocol | P0.2, P0.3 | DONE |
 
 ### P1 — Business and competitor research
 
 | ID | Task | Depends on | Status |
 |---|---|---|---|
-| P1.1 | Research 6–8 relevant competitors using first-party pages; capture public prices only | P0.1 | READY |
-| P1.2 | Research two strongest customer segments, pains, buying triggers, and framework-to-benefit translation | P0.1 | READY |
-| P1.3 | Evaluate initial business models, maintenance/hosting boundaries, acquisition paths, and services to defer | P0.1 | READY |
+| P1.1 | Research 6–8 relevant competitors using first-party pages; capture public prices only | P0.1 | ACTIVE |
+| P1.2 | Research two strongest customer segments, pains, buying triggers, and framework-to-benefit translation | P0.1 | ACTIVE |
+| P1.3 | Evaluate initial business models, maintenance/hosting boundaries, acquisition paths, and services to defer | P0.1 | ACTIVE |
 | P1.4 | Synthesize `docs/01-business.md` with citations and explicit fact/estimate/recommendation boundaries | P1.1–P1.3 | BLOCKED |
 | P1.5 | Independent source/coverage review and parent verification | P1.4 | BLOCKED |
 
@@ -161,4 +163,4 @@ The final review must explicitly map evidence to: business model/segments; compe
 
 ## Next task
 
-Complete P0.1–P0.4, dispatch P1.1–P1.3 to disjoint research artifacts, then synthesize only after all three pass parent review.
+Complete and parent-review P1.1–P1.3, then allow P1.4 synthesis. P1.5 independently reviews the synthesis before Phase 1 is accepted.
