@@ -46,3 +46,21 @@ Decision states: **Provisional**, **Approved**, **Superseded**, **Rejected**. Re
 - **Relevant sources:** Project brief; Phase 2 evidence pending.
 - **Date:** 2026-09-22.
 - **Approval status:** Approved research constraint; product choices pending Checkpoint 1.
+
+## D-006 — Initial target segments
+
+- **Decision:** Prioritize independent publications/newsletter businesses for Ghost-led work and professional-services firms on legacy WordPress for Astro-led migrations and rebuilds.
+- **Reasoning:** The first segment has a clear publication, membership, newsletter, migration, and ownership problem; the second has a referral-trust problem, a visible legacy-platform trigger, and a strong fit for mostly static content with controlled editing.
+- **Alternatives considered:** General small businesses, photographers, creative professionals, solo consultants, and “WordPress migrations” as a standalone segment. Migration is retained as a cross-segment buying trigger rather than a customer segment.
+- **Relevant sources:** `docs/01-business.md` §§3 and 6; `research/phase-1/segments.md`; final review `research/phase-1/final-review.md`.
+- **Date:** 2026-09-22.
+- **Approval status:** Provisional until Checkpoint 1.
+
+## D-007 — Three-package initial offer shape
+
+- **Decision:** Develop three bounded opening offers: an Astro launch site, a native Ghost publication launch, and a migration/remediation package. Do not set final prices until Phase 4 and pilot time data.
+- **Reasoning:** Fixed scope makes sales and delivery legible while preserving a quoted custom path. Migration/remediation provides a concrete trigger and evidence-producing acceptance criteria. A separate launch care/hosting package would introduce unmeasured recurring responsibility.
+- **Alternatives considered:** Custom-only projects, agency-owned hosting as the lead offer, unlimited maintenance retainers, a theme product line, and marketing retainers.
+- **Relevant sources:** `docs/01-business.md` §§1, 4, and 7; `research/phase-1/business-model.md`; public competitor evidence in `research/phase-1/competitors.md`.
+- **Date:** 2026-09-22.
+- **Approval status:** Provisional until Checkpoint 1.

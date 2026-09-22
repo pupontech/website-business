@@ -1,10 +1,10 @@
 # Project Status
 
-**Last updated:** 2026-09-22  
-**Current phase:** Phase 1 — Business and competitor research  
-**Current authorization:** Planning and Phase 1 research only  
-**Current task:** Parallel competitor, customer-segment, and business-model research  
-**Board:** `website-business`  
+**Last updated:** 2026-09-22
+**Current phase:** Phases 2–3 — Astro CMS and Ghost architecture research
+**Current authorization:** Research and planning through Checkpoint 1; no production implementation or infrastructure changes
+**Current task:** Current official CMS and Ghost research, followed by isolated CMS proofs of concept
+**Board:** `website-business`
 **Repository:** `https://github.com/pupontech/website-business` (private, default branch `main`)
 
 ## Completed tasks
@@ -13,11 +13,12 @@
 - Initial constraints and approval checkpoints recorded.
 - Planning repository initialized locally and pushed to the verified private GitHub remote.
 - Governance documents, complete dependency-aware task breakdown, OpenSpec policy, Kanban graph, and three protected owner gates created and verified.
+- Phase 1 competitor, segment, and business-model research completed with Luna/DeepSeek lanes and source-grounded synthesis in `docs/01-business.md`.
+- Phase 1 independent review, rework, and fresh-eyes re-review completed; final verdict `pass`. Parent citation verification: 63/63 source bijection, 8 competitors, 2 segments, 3 packages, WCAG 2.2 AA baseline retained.
 
 ## Blockers
 
-- None for initialization or Phase 1.
-- CMS account-dependent proofs may later require credentials or explicit account creation; do not claim those tests before access exists.
+- CMS account-dependent proofs may require credentials or explicit account creation; do not claim those tests before access exists.
 - Paid services, domains, DNS, production deployment, and public launch remain unauthorized.
 
 ## Pending approvals
@@ -43,19 +44,21 @@ Status vocabulary: `DONE`, `ACTIVE`, `READY`, `BLOCKED`, `FUTURE`.
 
 | ID | Task | Depends on | Status |
 |---|---|---|---|
-| P1.1 | Research 6–8 relevant competitors using first-party pages; capture public prices only | P0.1 | ACTIVE |
-| P1.2 | Research two strongest customer segments, pains, buying triggers, and framework-to-benefit translation | P0.1 | ACTIVE |
-| P1.3 | Evaluate initial business models, maintenance/hosting boundaries, acquisition paths, and services to defer | P0.1 | ACTIVE |
-| P1.4 | Synthesize `docs/01-business.md` with citations and explicit fact/estimate/recommendation boundaries | P1.1–P1.3 | BLOCKED |
-| P1.5 | Independent source/coverage review and parent verification | P1.4 | BLOCKED |
+| P1.1 | Research 6–8 relevant competitors using first-party pages; capture public prices only | P0.1 | DONE |
+| P1.2 | Research two strongest customer segments, pains, buying triggers, and framework-to-benefit translation | P0.1 | DONE |
+| P1.3 | Evaluate initial business models, maintenance/hosting boundaries, acquisition paths, and services to defer | P0.1 | DONE |
+| P1.4 | Synthesize `docs/01-business.md` with citations and explicit fact/estimate/recommendation boundaries | P1.1–P1.3 | DONE |
+| P1.5 | Independent source/coverage review and parent verification | P1.4 | DONE |
+| P1.6 | Correct review findings without changing the recommendation | P1.5 | DONE |
+| P1.7 | Fresh-eyes final review and parent citation verification | P1.6 | DONE |
 
 ### P2 — Astro CMS research and proof of concept
 
 | ID | Task | Depends on | Status |
 |---|---|---|---|
-| P2.1 | Current official capability/pricing research: Sanity, Keystatic, Storyblok, EmDash, Astro content collections | P1.5 | FUTURE |
-| P2.2 | Model permissions, ownership, export, backups, dependency, and security for scenarios A/B/C | P2.1 | FUTURE |
-| P2.3 | Cost model for 1, 5, and 20 sites with stated assumptions | P2.1 | FUTURE |
+| P2.1 | Current official capability/pricing research: Sanity, Keystatic, Storyblok, EmDash, Astro content collections | P1.7 | ACTIVE |
+| P2.2 | Model permissions, ownership, export, backups, dependency, and security for scenarios A/B/C | P1.7 | ACTIVE |
+| P2.3 | Cost model for 1, 5, and 20 sites with stated assumptions | P2.1 | READY |
 | P2.4 | Select two POC candidates and define isolated test protocol | P2.1–P2.3 | FUTURE |
 | P2.5 | Execute candidate 1 POC: create/edit/image/preview/publish/SEO/sections/permissions/export/recovery | P2.4 | FUTURE |
 | P2.6 | Execute candidate 2 POC with the same protocol | P2.4 | FUTURE |
@@ -65,8 +68,8 @@ Status vocabulary: `DONE`, `ACTIVE`, `READY`, `BLOCKED`, `FUTURE`.
 
 | ID | Task | Depends on | Status |
 |---|---|---|---|
-| P3.1 | Research Ghost(Pro), self-hosting total stack, current pricing, ownership, backups, updates, and security | P1.5 | FUTURE |
-| P3.2 | Research native themes, custom themes, APIs, GScan, Starter, memberships, Portal, newsletters, Stripe, and email | P3.1 | FUTURE |
+| P3.1 | Research Ghost(Pro), self-hosting total stack, current pricing, ownership, backups, updates, and security | P1.7 | ACTIVE |
+| P3.2 | Research native themes, custom themes, APIs, GScan, Starter, memberships, Portal, newsletters, Stripe, and email | P1.7 | ACTIVE |
 | P3.3 | Test/document headless limitations and decision criteria without overstating untested behavior | P3.2 | FUTURE |
 | P3.4 | Define setup/customization/theme/migration/membership/maintenance service boundaries and cost assumptions | P3.1–P3.3 | FUTURE |
 | P3.5 | Synthesize and independently review `docs/03-ghost.md` | P3.4 | FUTURE |
