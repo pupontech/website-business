@@ -1,0 +1,357 @@
+{
+  "run_id": "2026-09-22T18:41:27Z-c2-storyblok-harness-01",
+  "candidate": "c2-storyblok",
+  "evidence_class": "harness",
+  "scope_statement": "These checks verify the local harness and the request behaviour of the unmodified official client against a local mock CDN. They are NOT evidence of any Storyblok product operation; every protocol operation remains blocked in operations.jsonl.",
+  "checks": [
+    {
+      "run_id": "2026-09-22T18:41:27Z-c2-storyblok-harness-01",
+      "candidate": "c2-storyblok",
+      "evidence_class": "harness",
+      "check_id": "H0",
+      "title": "Ports and client endpoint are consistent before the run",
+      "status": "pass",
+      "observable_result": "port 4322 in use before start: false; port 4399 in use before start: false; client endpoint http://127.0.0.1:4399/v2 points at the mock CDN: true",
+      "observed_values": {
+        "site_port": 4322,
+        "site_port_in_use_before_run": false,
+        "mock_port": 4399,
+        "mock_port_in_use_before_run": false,
+        "configured_endpoint": "http://127.0.0.1:4399/v2",
+        "endpoint_matches_mock_port": true,
+        "plan_reserved_port_4321_held_by_sibling_poc": true
+      },
+      "commands": [
+        "fetch http://127.0.0.1:4322/",
+        "fetch http://127.0.0.1:4399/"
+      ],
+      "evidence_files": [],
+      "blocked_reason": null,
+      "notes": "poc-plan.md §8.3 allocates 4321 to candidate 1 and 4322/4323 to candidate 2. A concurrent EmDash POC held 4321 during this run, which is why this harness moved to dedicated ports and asserts its own process identity (H4)."
+    },
+    {
+      "run_id": "2026-09-22T18:41:27Z-c2-storyblok-harness-01",
+      "candidate": "c2-storyblok",
+      "evidence_class": "harness",
+      "check_id": "H1",
+      "title": "TypeScript/astro check passes on the harness",
+      "status": "pass",
+      "observable_result": "astro check exited 0 with the checker's \"0 errors\" summary line: true",
+      "observed_values": {
+        "exit_code": 0,
+        "checker_reported_zero_errors": true,
+        "aborted_on_missing_dependency": false,
+        "ms": 4277
+      },
+      "commands": [
+        "astro check"
+      ],
+      "evidence_files": [
+        "run-01/logs/h1-astro-check.txt"
+      ],
+      "blocked_reason": null
+    },
+    {
+      "run_id": "2026-09-22T18:41:27Z-c2-storyblok-harness-01",
+      "candidate": "c2-storyblok",
+      "evidence_class": "harness",
+      "check_id": "H2",
+      "title": "Official guide config (output: \"server\", no adapter) — actual build result",
+      "status": "pass",
+      "observable_result": "The documented config failed the build with exit 1 and an adapter-related message.",
+      "observed_values": {
+        "exit_code": 1,
+        "mentions_adapter": true,
+        "first_error_line": "[NoAdapterInstalled] Cannot use server-rendered pages without an adapter. Please install and configure the appropriate server adapter for your final deployment."
+      },
+      "commands": [
+        "astro build --config astro.config.documented.mjs"
+      ],
+      "evidence_files": [
+        "run-01/logs/h2-build-documented-config.txt"
+      ],
+      "blocked_reason": null
+    },
+    {
+      "run_id": "2026-09-22T18:41:27Z-c2-storyblok-harness-01",
+      "candidate": "c2-storyblok",
+      "evidence_class": "harness",
+      "check_id": "H3",
+      "title": "On-demand build succeeds with the official @astrojs/node adapter",
+      "status": "pass",
+      "observable_result": "exit 0; dist/server/entry.mjs present: true",
+      "observed_values": {
+        "exit_code": 0,
+        "entry_present": true,
+        "ms": 1635
+      },
+      "commands": [
+        "astro build [env: POC_ASTRO_OUTPUT]"
+      ],
+      "evidence_files": [
+        "run-01/logs/h3-build-server-adapter.txt"
+      ],
+      "blocked_reason": null
+    },
+    {
+      "run_id": "2026-09-22T18:41:27Z-c2-storyblok-harness-01",
+      "candidate": "c2-storyblok",
+      "evidence_class": "harness",
+      "check_id": "H4",
+      "title": "Served HTML renders the story content fetched through the official client",
+      "status": "pass",
+      "observable_result": "GET / returned 200 from the harness's own process: true; 3/3 expected POC Test strings present in the served HTML",
+      "observed_values": {
+        "http_status": 200,
+        "served_by_own_harness_process": true,
+        "matched": [
+          "POC Test Shared Feature Definition",
+          "Published text for the shared feature block.",
+          "data-poc=\"page-title\""
+        ],
+        "missing": []
+      },
+      "commands": [
+        "node dist/server/entry.mjs (HOST=127.0.0.1 PORT=4322)",
+        "curl-equivalent: fetch http://127.0.0.1:4322/"
+      ],
+      "evidence_files": [
+        "run-01/renders/home-published.html"
+      ],
+      "blocked_reason": null
+    },
+    {
+      "run_id": "2026-09-22T18:41:27Z-c2-storyblok-harness-01",
+      "candidate": "c2-storyblok",
+      "evidence_class": "harness",
+      "check_id": "H5",
+      "title": "version=draft and version=published return different bodies from the same route",
+      "status": "pass",
+      "observable_result": "/?version=draft contained the draft-only marker: true; the published route contained the published-only text: true",
+      "observed_values": {
+        "draft_status": 200,
+        "published_status": 200,
+        "draft_only_marker_present_in_draft": true,
+        "published_text_present_in_published": true
+      },
+      "commands": [
+        "fetch http://127.0.0.1:4322/?version=draft",
+        "fetch http://127.0.0.1:4322/"
+      ],
+      "evidence_files": [
+        "run-01/renders/home-draft.html",
+        "run-01/renders/home-published.html"
+      ],
+      "blocked_reason": null
+    },
+    {
+      "run_id": "2026-09-22T18:41:27Z-c2-storyblok-harness-01",
+      "candidate": "c2-storyblok",
+      "evidence_class": "harness",
+      "check_id": "H6",
+      "title": "One registered component definition renders in two different content items",
+      "status": "pass",
+      "observable_result": "the shared feature headline appeared on both / (true) and /poc-test-second-page (true)",
+      "observed_values": {
+        "second_page_status": 200
+      },
+      "commands": [
+        "fetch http://127.0.0.1:4322/poc-test-second-page"
+      ],
+      "evidence_files": [
+        "run-01/renders/second-page.html"
+      ],
+      "blocked_reason": null
+    },
+    {
+      "run_id": "2026-09-22T18:41:27Z-c2-storyblok-harness-01",
+      "candidate": "c2-storyblok",
+      "evidence_class": "harness",
+      "check_id": "H7",
+      "title": "Nested blocks (grid with repeated teaser children) render through StoryblokComponent",
+      "status": "pass",
+      "observable_result": "3/3 nested-block markers present in the served HTML",
+      "observed_values": {
+        "matched": [
+          "POC Test Teaser One",
+          "POC Test Teaser Two",
+          "data-blok=\"grid\""
+        ]
+      },
+      "commands": [
+        "fetch http://127.0.0.1:4322/"
+      ],
+      "evidence_files": [
+        "run-01/renders/home-published.html"
+      ],
+      "blocked_reason": null
+    },
+    {
+      "run_id": "2026-09-22T18:41:27Z-c2-storyblok-harness-01",
+      "candidate": "c2-storyblok",
+      "evidence_class": "harness",
+      "check_id": "H8",
+      "title": "Modelled SEO fields from the content item reach the served <head>",
+      "status": "pass",
+      "observable_result": "4/4 expected head tags present with the exact invented values",
+      "observed_values": {
+        "missing": []
+      },
+      "commands": [
+        "fetch http://127.0.0.1:4322/ (head excerpt)"
+      ],
+      "evidence_files": [
+        "run-01/renders/home-published.html"
+      ],
+      "blocked_reason": null
+    },
+    {
+      "run_id": "2026-09-22T18:41:27Z-c2-storyblok-harness-01",
+      "candidate": "c2-storyblok",
+      "evidence_class": "harness",
+      "check_id": "H9",
+      "title": "Site emits the documented frame-ancestors CSP on the on-demand route (our side only)",
+      "status": "pass",
+      "observable_result": "Content-Security-Policy response header from the harness's own process was: \"frame-ancestors https://app.storyblok.com\"",
+      "observed_values": {
+        "csp_header": "frame-ancestors https://app.storyblok.com",
+        "served_by_own_harness_process": true,
+        "vendor_side_tested": false
+      },
+      "commands": [
+        "fetch http://127.0.0.1:4322/ (response headers)"
+      ],
+      "evidence_files": [
+        "run-01/renders/home-published.html"
+      ],
+      "blocked_reason": null,
+      "notes": "This verifies only that our site can emit the header the Visual Editor requires. Whether app.storyblok.com will accept the iframe, and the vendor's HTTPS-for-localhost requirement, are untested (no account)."
+    },
+    {
+      "run_id": "2026-09-22T18:41:27Z-c2-storyblok-harness-01",
+      "candidate": "c2-storyblok",
+      "evidence_class": "harness",
+      "check_id": "H10",
+      "title": "Official client sent the expected CDN requests (token present, version parameter)",
+      "status": "pass",
+      "observable_result": "mock CDN served 8 requests to the official client (versions seen: draft, published), every one carrying the token parameter; 1 unauthenticated request(s) were rejected with 401 by the mock's own token check",
+      "observed_values": {
+        "requests_served": 8,
+        "requests_rejected_401": 1,
+        "versions": [
+          "draft",
+          "published"
+        ],
+        "all_served_requests_token_present": true
+      },
+      "commands": [
+        "node mock-cdn/server.mjs (MOCK_CDN_LOG=run-01/logs/mock-cdn-requests.jsonl)"
+      ],
+      "evidence_files": [
+        "run-01/logs/mock-cdn-requests.jsonl"
+      ],
+      "blocked_reason": null,
+      "notes": "The CDN base URL was redirected to 127.0.0.1 by the harness endpoint override; the request shape (path, query parameters) is generated by the unmodified official client."
+    },
+    {
+      "run_id": "2026-09-22T18:41:27Z-c2-storyblok-harness-01",
+      "candidate": "c2-storyblok",
+      "evidence_class": "harness",
+      "check_id": "H11",
+      "title": "Static (build-time fetch) output also renders the same content",
+      "status": "pass",
+      "observable_result": "static build exit 0; dist/index.html present: true; published text rendered at build time: true",
+      "observed_values": {
+        "exit_code": 0,
+        "index_html_bytes": 1151
+      },
+      "commands": [
+        "astro build [env: POC_ASTRO_OUTPUT]"
+      ],
+      "evidence_files": [
+        "run-01/logs/h11-build-static.txt",
+        "run-01/renders/static-index.html"
+      ],
+      "blocked_reason": null,
+      "notes": "Static output emits files, so response-header behaviour (H9) and per-request draft reads do not exist in that mode; the draft path requires the on-demand build."
+    },
+    {
+      "run_id": "2026-09-22T18:41:27Z-c2-storyblok-harness-01",
+      "candidate": "c2-storyblok",
+      "evidence_class": "harness",
+      "check_id": "H12",
+      "title": "No credential value appears anywhere in the evidence tree",
+      "status": "pass",
+      "observable_result": "no evidence file contains the invented placeholder token value; no real credential was ever configured",
+      "observed_values": {
+        "offenders": []
+      },
+      "commands": [
+        "scan evidence tree for the placeholder token value"
+      ],
+      "evidence_files": [],
+      "blocked_reason": null
+    },
+    {
+      "run_id": "2026-09-22T18:41:27Z-c2-storyblok-harness-01",
+      "candidate": "c2-storyblok",
+      "evidence_class": "harness",
+      "check_id": "H13",
+      "title": "Screenshots of the rendered harness pages (local harness UI, not the vendor app)",
+      "status": "pass",
+      "observable_result": "2 headless Chromium screenshots captured at 1280x900 (home-published.png=24187B, home-draft.png=24169B)",
+      "observed_values": {
+        "screenshots": [
+          {
+            "name": "home-published.png",
+            "exit_code": 0,
+            "bytes": 24187
+          },
+          {
+            "name": "home-draft.png",
+            "exit_code": 0,
+            "bytes": 24169
+          }
+        ],
+        "browser": "chromium (headless, --no-sandbox)"
+      },
+      "commands": [
+        "chromium --headless --window-size=1280,900 --screenshot=home-published.png <url>",
+        "chromium --headless --window-size=1280,900 --screenshot=home-draft.png <url>"
+      ],
+      "evidence_files": [
+        "run-01/renders/home-published.png",
+        "run-01/renders/home-draft.png"
+      ],
+      "blocked_reason": null,
+      "notes": "These are pixels of the local harness page. No Storyblok UI exists or was reachable in this run, so no vendor screenshot can be produced."
+    },
+    {
+      "run_id": "2026-09-22T18:41:27Z-c2-storyblok-harness-01",
+      "candidate": "c2-storyblok",
+      "evidence_class": "harness",
+      "check_id": "H14",
+      "title": "Client-side script the integration injects into the public page (recorded, not judged)",
+      "status": "pass",
+      "observable_result": "the public page references 1 module script(s): /_astro/page.CZkWFe1x.js (2271 B)",
+      "observed_values": {
+        "script_tags": [
+          {
+            "src": "/_astro/page.CZkWFe1x.js",
+            "bytes": 2271,
+            "sha256": "298b693e8f79b2192979def41242074f00b8aaaf08bcbbe576897451fb19e43d"
+          }
+        ],
+        "bridge_enabled_by_default": true
+      },
+      "commands": [
+        "read dist/index.html and stat the referenced assets"
+      ],
+      "evidence_files": [
+        "run-01/renders/static-index.html"
+      ],
+      "blocked_reason": null,
+      "notes": "Recorded because AGENTS.md treats client JavaScript as a design constraint. The Storyblok Astro integration injects its bridge loader by default; this measurement covers one page of the harness only."
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+---
+// Home route. Fetch pattern copied from the official Astro guide
+// (https://www.storyblok.com/docs/guides/astro, re-verified 2026-09-22):
+//   const { data } = await storyblokApi.get("cdn/stories/home", { version: "draft" });
+//
+// The guide hard-codes version: "draft". This harness reads the version from the
+// request query so draft and published responses can be exercised and asserted
+// separately; that is a harness deviation for observability, not a vendor claim.
+import { useStoryblokApi } from "@storyblok/astro";
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+import type { ISbStoryData } from "@storyblok/astro";
+import Layout from "../layouts/Layout.astro";
+
+const versionParam = Astro.url.searchParams.get("version");
+const version = versionParam === "draft" ? "draft" : "published";
+
+const storyblokApi = useStoryblokApi();
+const { data } = await storyblokApi.get("cdn/stories/home", { version });
+const story = (data as { story: ISbStoryData }).story;
+---
+
+<Layout seo={story.content.seo} fallbackTitle="POC Test site">
+	<p data-poc="requested-version">{version}</p>
+	<StoryblokComponent blok={story.content} />
+</Layout>

@@ -22,3 +22,7 @@ Thumbs.db
 .sanity/
 .keystatic/
 .cache/
+
+# Local POC database snapshots may contain sensitive test state
+/pocs/phase-2/emdash/*.db
+/pocs/phase-2/emdash/evidence/*.db

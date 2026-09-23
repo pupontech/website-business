@@ -1,0 +1,20 @@
+---
+// content type `page` — registered in astro.config.ts as "storyblok/Page".
+// Content-only component: the route owns the document shell and the <head>, so
+// modelled SEO fields reach the served head exactly once (asserted by H8).
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+import type { SbBlokData } from "@storyblok/astro";
+
+interface PageBlok extends SbBlokData {
+	title?: string;
+	seo?: { title?: string; description?: string; og_image?: string };
+	body?: SbBlokData[];
+}
+
+const { blok } = Astro.props as { blok: PageBlok };
+---
+
+<main data-blok="page">
+	<h1 data-poc="page-title">{blok.title}</h1>
+	{blok.body?.map((nestedBlok) => <StoryblokComponent blok={nestedBlok} />)}
+</main>

@@ -1,0 +1,18 @@
+---
+// Content component `feature` — registered as "storyblok/Feature".
+// This same Astro component definition is used by two different stories in the
+// mock fixtures to exercise the component/block contract locally.
+import type { SbBlokData } from "@storyblok/astro";
+
+interface FeatureBlok extends SbBlokData {
+	headline?: string;
+	text?: string;
+}
+
+const { blok } = Astro.props as { blok: FeatureBlok };
+---
+
+<section class="feature" data-blok="feature">
+	<h2 data-poc="feature-headline">{blok.headline}</h2>
+	<p data-poc="feature-text">{blok.text}</p>
+</section>

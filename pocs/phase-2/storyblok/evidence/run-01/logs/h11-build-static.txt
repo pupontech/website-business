@@ -1,0 +1,24 @@
+$ astro build [env: POC_ASTRO_OUTPUT]
+exit=0
+
+20:41:38 [vite] Re-optimizing dependencies because vite config has changed
+20:41:38 [types] Generated 191ms
+20:41:38 [build] output: "static"
+20:41:38 [build] mode: "static"
+20:41:38 [build] directory: /root/Projects/website-business/pocs/phase-2/storyblok/harness/dist/
+20:41:38 [build] Collecting build info...
+20:41:38 [build] ✓ Completed in 225ms.
+20:41:38 [build] Building static entrypoints...
+20:41:38 [vite] ✓ built in 334ms
+20:41:39 [vite] ✓ built in 59ms
+20:41:39 [build] Rearranging server assets...
+
+ generating static routes 
+20:41:39   ├─ /poc-test-second-page/index.html (+17ms) 
+20:41:39   ├─ /index.html (+15ms) 
+20:41:39 ✓ Completed in 44ms.
+
+20:41:39 [build] ✓ Completed in 481ms.
+20:41:39 [build] 2 page(s) built in 712ms
+20:41:39 [build] Complete!
+

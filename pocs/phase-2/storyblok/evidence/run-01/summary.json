@@ -1,0 +1,24 @@
+{
+  "run_id": "2026-09-22T18:41:27Z-c2-storyblok-harness-01",
+  "candidate": "c2-storyblok",
+  "verdict": "Candidate 2 (Storyblok) could not be executed. No account, space, session, or token exists in this environment, and creating one is not authorized for this task; every protocol operation O1–O10 is blocked at the account gate. A credential-free Astro integration harness was built and verified instead.",
+  "harness_check_counts": {
+    "pass": 15
+  },
+  "protocol_operation_counts": {
+    "blocked": 22
+  },
+  "protocol_blocked_reasons": [
+    "ACCOUNT_REQUIRED",
+    "PLAN_GATED"
+  ],
+  "operations_total": 22,
+  "account_dependent_criteria": 22,
+  "criteria_passed": 0,
+  "account_created": false,
+  "payment_made": false,
+  "deployment_made": false,
+  "run_started_at": "2026-09-22T18:41:27",
+  "elapsed_minutes_total": 0.2,
+  "elapsed_minutes_astro_commands": 0.1
+}

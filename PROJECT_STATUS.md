@@ -1,9 +1,9 @@
 # Project Status
 
 **Last updated:** 2026-09-23
-**Current phase:** Phase 2 review and Phase 4 pricing/operations research; Phase 3 research synthesis passed review
+**Current phase:** Phase 2 and Phase 3 reviewed; Phase 4 synthesis and Phase 5 architecture/security research active
 **Current authorization:** Research and planning through Checkpoint 1; no production implementation or infrastructure changes
-**Current task:** Independent review of `docs/02-cms.md`; parallel pricing and operations evidence, then Phase 4 synthesis
+**Current task:** Complete and independently verify Phases 4–5, then present the owner’s Checkpoint 1 decision
 **Board:** `website-business`
 **Repository:** `https://github.com/pupontech/website-business` (private, default branch `main`)
 
@@ -15,15 +15,17 @@
 - Governance documents, complete dependency-aware task breakdown, OpenSpec policy, Kanban graph, and three protected owner gates created and verified.
 - Phase 1 competitor, segment, and business-model research completed with Luna/DeepSeek lanes and source-grounded synthesis in `docs/01-business.md`.
 - Phase 1 independent review, rework, and fresh-eyes re-review completed; final verdict `pass`. Parent citation verification: 63/63 source bijection, 8 competitors, 2 segments, 3 packages, WCAG 2.2 AA baseline retained. A later Ghost(Pro) live billing-toggle check corrected the annual Starter figure in `docs/01-business.md` and the Phase 1 business-model research; recheck it before quoting.
-- Phase 2 capability/permission/cost research and two POC attempts completed. EmDash local proof: 18 subcriteria, 11 pass / 4 partial / 3 blocked; supported browser admin, permissions, scheduling, and full restore unproven. Storyblok product proof: all 22 subcriteria blocked at the account/plan gate; the 15 passing local harness checks prove only integration code against a mock CDN. `docs/02-cms.md` is under independent review; its recommendations are not accepted yet.
+- Phase 2 capability/permission/cost research and two POC attempts completed. EmDash local proof: 18 subcriteria, 11 pass / 4 partial / 3 blocked; supported browser admin, permissions, scheduling, and full restore unproven. Storyblok product proof: all 22 subcriteria blocked at the account/plan gate; the 15 passing local harness checks prove only integration code against a mock CDN. `docs/02-cms.md` passed independent final document review; its recommendations remain provisional pending owner approval and untested product gates. Seven stale Storyblok report hashes were reconciled to the unmodified, manifest-verified evidence.
 - Phase 3 Ghost hosting/theme research and `docs/03-ghost.md` synthesis completed. Independent review requested changes; corrections received a fresh-eyes `pass` in `research/phase-3/final-review.md`. Native Ghost themes and Ghost(Pro) remain provisional recommendations, not a product test.
-- Phase 4 pricing-model and operations/ownership research delegated in separate Luna lanes; no client price approved.
+- Phase 4 pricing-model and operations/ownership research completed in separate Luna lanes; the bottom-up arithmetic and care work mix were reconciled. Phase 4 synthesis is delegated and not yet independently reviewed; no client price approved.
+- Phase 5 Astro/hosting research completed; security/recovery research is delegated. A parent spot-check corrected the same-day Astro npm `latest` version from 7.2.4 to 7.3.4. Architecture/security synthesis and independent review remain open.
 
 ## Blockers
 
 - A real Storyblok account/space and a second editor inbox are required to exercise its CMS product; no account or payment has been authorized. EmDash requires supported browser authentication and a second actor/email transport to validate the permissions gate.
 - The EmDash POC uses a disposable local auth helper that was removed before final checks; its API proof is not evidence of a supported client editing workflow.
-- CMS recommendations await independent review and any required rework. POC evidence must be screened for sensitive data before Git publication.
+- Storyblok Starter's commercial suitability for agency-managed client production remains UNKNOWN pending written vendor confirmation; the Storyblok product and roles require an authorized real-space test before a customer recommendation is operationally validated.
+- EmDash's local recovery evidence includes an SQLite backup with nonempty user, auth-token, and API-token tables. It is excluded from Git; the complete EmDash POC evidence remains local pending a safe, manifest-consistent publication strategy. Never publish the raw backup as ordinary source evidence.
 - Paid services, domains, DNS, production deployment, and public launch remain unauthorized.
 
 ## Pending approvals
@@ -67,7 +69,7 @@ Status vocabulary: `DONE`, `ACTIVE`, `READY`, `BLOCKED`, `FUTURE`.
 | P2.4 | Select two POC candidates and define isolated test protocol | P2.1–P2.3 | DONE |
 | P2.5 | Execute candidate 1 POC: create/edit/image/preview/publish/SEO/sections/permissions/export/recovery | P2.4 | DONE — partial/blocked criteria recorded |
 | P2.6 | Attempt candidate 2 POC with the same protocol | P2.4 | DONE — account/plan blocked; mock harness is not vendor proof |
-| P2.7 | Synthesize and review `docs/02-cms.md` and CMS decision tree | P2.5, P2.6 | ACTIVE — synthesis done; review running |
+| P2.7 | Synthesize and review `docs/02-cms.md` and CMS decision tree | P2.5, P2.6 | DONE — independent final review pass; product gates remain |
 
 ### P3 — Ghost architecture
 
@@ -83,20 +85,20 @@ Status vocabulary: `DONE`, `ACTIVE`, `READY`, `BLOCKED`, `FUTURE`.
 
 | ID | Task | Depends on | Status |
 |---|---|---|---|
-| P4.1 | Build bottom-up pricing calculator for small Astro, custom Astro+CMS, Ghost, and maintenance | P1.5, P2.7, P3.5 | ACTIVE — research delegated; reconcile after CMS review |
-| P4.2 | Define inquiry-to-maintenance workflow, milestones, revision/scope/content/support/cancellation rules | P4.1 | READY — independent research delegated |
-| P4.3 | Define ownership, portability, offboarding, and recurring-cost policies | P4.1 | FUTURE |
-| P4.4 | Identify legal/privacy/tax/accessibility/licensing matters for professional jurisdiction-specific review | P4.2, P4.3 | FUTURE |
-| P4.5 | Synthesize and review `docs/04-pricing-operations.md` | P4.1–P4.4 | FUTURE |
+| P4.1 | Build bottom-up pricing calculator for small Astro, custom Astro+CMS, Ghost, and maintenance | P1.5, P2.7, P3.5 | DONE — proposed assumptions, arithmetic verified |
+| P4.2 | Define inquiry-to-maintenance workflow, milestones, revision/scope/content/support/cancellation rules | P4.1 | DONE — provisional policy research |
+| P4.3 | Define ownership, portability, offboarding, and recurring-cost policies | P4.1 | DONE — provisional policy research |
+| P4.4 | Identify legal/privacy/tax/accessibility/licensing matters for professional jurisdiction-specific review | P4.2, P4.3 | DONE — professional-review register, not legal advice |
+| P4.5 | Synthesize and review `docs/04-pricing-operations.md` | P4.1–P4.4 | ACTIVE — synthesis delegated; independent review pending |
 
 ### P5 — Technical architecture and security
 
 | ID | Task | Depends on | Status |
 |---|---|---|---|
-| P5.1 | Define Astro runtime/content/image/preview/build/deployment architecture | P2.7 | FUTURE |
-| P5.2 | Evaluate managed vs self-hosted hosting, BunnyCDN, media, forms/Letterbird, email, analytics, monitoring | P2.7, P3.5, P4.5 | FUTURE |
-| P5.3 | Define environments, CI/CD, DNS/TLS, rollback, backup, restore-test, and monitoring procedures | P5.1, P5.2 | FUTURE |
-| P5.4 | Threat-model credentials, CMS roles, previews, webhooks, forms, isolation, updates, access revocation | P5.1–P5.3 | FUTURE |
+| P5.1 | Define Astro runtime/content/image/preview/build/deployment architecture | P2.7 | DONE — research only, no deployment |
+| P5.2 | Evaluate managed vs self-hosted hosting, BunnyCDN, media, forms/Letterbird, email, analytics, monitoring | P2.7, P3.5, P4.5 | DONE — conditional research only |
+| P5.3 | Define environments, CI/CD, DNS/TLS, rollback, backup, restore-test, and monitoring procedures | P5.1, P5.2 | ACTIVE — security/recovery research delegated |
+| P5.4 | Threat-model credentials, CMS roles, previews, webhooks, forms, isolation, updates, access revocation | P5.1–P5.3 | ACTIVE — security/recovery research delegated |
 | P5.5 | Produce and review `docs/05-architecture.md`, diagrams, and `docs/05-security.md` | P5.4 | FUTURE |
 | G1 | **Checkpoint 1 owner approval** | P1.5, P2.7, P3.5, P4.5, P5.5 | BLOCKED |
 
@@ -171,4 +173,4 @@ The final review must explicitly map evidence to: business model/segments; compe
 
 ## Next task
 
-Review `research/phase-2/review.md` when the Luna lane completes; reconcile any pricing/permission defects, then re-review `docs/02-cms.md`. Verify and sanitize POC artifacts before committing. Synthesize and review Phase 4 pricing/operations from the two delegated research artifacts, then Phase 5 architecture/security. Present Checkpoint 1 only after those documents and the evidence gaps are explicit; do not unblock any owner gate without approval.
+Review `docs/04-pricing-operations.md` after Luna synthesis, including price formulas, care scope and Storyblok commercial/permission gates. Review Phase 5 security research, then delegate disjoint architecture/security syntheses and independent reviews. Preserve sensitive EmDash SQLite evidence locally and do not claim portable restore proof from a missing backup. Present Checkpoint 1 with exact unresolved product/legal/operating gates; do not unblock any owner gate without approval.

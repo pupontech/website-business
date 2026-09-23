@@ -1,0 +1,13 @@
+---
+import type { SbBlokData } from "@storyblok/astro";
+
+interface TeaserBlok extends SbBlokData {
+	headline?: string;
+}
+
+const { blok } = Astro.props as { blok: TeaserBlok };
+---
+
+<div class="teaser" data-blok="teaser">
+	<h3 data-poc="teaser-headline">{blok.headline}</h3>
+</div>

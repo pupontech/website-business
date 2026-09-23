@@ -1,0 +1,17 @@
+---
+// Nestable container component `grid` — registered as "storyblok/Grid".
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+import type { SbBlokData } from "@storyblok/astro";
+
+interface GridBlok extends SbBlokData {
+	columns?: SbBlokData[];
+}
+
+const { blok } = Astro.props as { blok: GridBlok };
+---
+
+<div class="grid" data-blok="grid">
+	{
+		blok.columns?.map((nestedBlok) => <StoryblokComponent blok={nestedBlok} />)
+	}
+</div>

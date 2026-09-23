@@ -1,0 +1,23 @@
+---
+// Second content item. It renders the SAME `feature` component definition as the
+// home story (component/block contract reuse) and carries its own modelled SEO
+// fields, which the Layout writes into the served <head>.
+import { useStoryblokApi } from "@storyblok/astro";
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+import type { ISbStoryData } from "@storyblok/astro";
+import Layout from "../layouts/Layout.astro";
+
+const versionParam = Astro.url.searchParams.get("version");
+const version = versionParam === "draft" ? "draft" : "published";
+
+const storyblokApi = useStoryblokApi();
+const { data } = await storyblokApi.get("cdn/stories/poc-test-second-page", {
+	version,
+});
+const story = (data as { story: ISbStoryData }).story;
+---
+
+<Layout seo={story.content.seo} fallbackTitle="POC Test site">
+	<p data-poc="requested-version">{version}</p>
+	<StoryblokComponent blok={story.content} />
+</Layout>

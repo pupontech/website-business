@@ -1,0 +1,75 @@
+{
+  "run_id": "2026-09-22T18:41:27Z-c2-storyblok-harness-01",
+  "candidate": "c2-storyblok",
+  "evidence_class": "harness",
+  "recorded_at": "2026-09-22T18:41:39.195Z",
+  "host": {
+    "os": "PRETTY_NAME=\"Debian GNU/Linux 13 (trixie)\"",
+    "node": "v22.23.2",
+    "npm": "10.9.8",
+    "cpu_count": 2,
+    "total_mem_mb": 3915,
+    "python": "Python 3.13.5",
+    "node_env_on_host": "production",
+    "node_env_note": "the host exports NODE_ENV=production, so plain `npm install` silently omits devDependencies (@astrojs/check, typescript); they must be installed with `npm install --include=dev` or the type-check step cannot run"
+  },
+  "packages": {
+    "astro": "7.3.3",
+    "@storyblok/astro": "10.3.2",
+    "@storyblok/js": "6.3.2",
+    "storyblok-js-client": "7.7.6",
+    "@astrojs/node": "11.1.6",
+    "@astrojs/check": "0.9.10",
+    "typescript": "5.9.3",
+    "declared_in_package_json": {
+      "@astrojs/node": "11.1.6",
+      "@storyblok/astro": "10.3.2",
+      "astro": "7.3.3"
+    }
+  },
+  "lockfile": {
+    "path": "harness/package-lock.json",
+    "sha256": "3e0f45b094cf0f75fbb868d9001affeb417659e72c7bc1016c50d72e6bda344d",
+    "bytes": 223658
+  },
+  "network_egress": {
+    "vendor_api_contacted": false,
+    "during_run_endpoint": "http://127.0.0.1:4399/v2 (local mock CDN; no Storyblok host is contacted by the harness)",
+    "npm_registry_used": "yes, to install the official packages listed above"
+  },
+  "ports": {
+    "site_http": 4322,
+    "mock_cdn_http": 4399,
+    "plan_reserved_ports": {
+      "candidate 1 (EmDash)": [
+        4321
+      ],
+      "candidate 2 (Storyblok)": [
+        4322,
+        4323
+      ]
+    },
+    "foreign_process_observed": "an EmDash POC dev server (astro dev --port 4321) from a sibling task was listening on 4321 during this run; it must not be disturbed, and this harness moved to 4322/4399 and asserts its own process identity (H0, H4)"
+  },
+  "secrets_configured": {
+    "names_only": [
+      "STORYBLOK_DELIVERY_API_TOKEN"
+    ],
+    "values_real": false,
+    "note": "the only configured value is the invented placeholder; no Storyblok account, space, or token exists in this POC"
+  },
+  "local_ca": {
+    "mkcert_present": true,
+    "chromium_nssdb": false,
+    "https_preview_attempted": false
+  },
+  "environments": {
+    "POC_ASTRO_OUTPUT": [
+      "static (H11)",
+      "server (H3–H9)"
+    ]
+  },
+  "no_account_created": true,
+  "no_payment": true,
+  "no_deployment": true
+}

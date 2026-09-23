@@ -1,0 +1,40 @@
+---
+// Layout.astro — the modelled-SEO-field surface (protocol operation O6-a).
+//
+// Storyblok's native SEO feature is a plan question (documented from Growth on
+// the pricing page, re-verified 2026-09-22). This layout instead renders SEO
+// values that come from ordinary content-model fields of the `page` component,
+// which is what a project controls regardless of plan. Evidence of the rendered
+// result is asserted from served HTML, never from this file.
+interface SeoFields {
+	title?: string;
+	description?: string;
+	og_image?: string;
+}
+
+interface Props {
+	seo?: SeoFields;
+	fallbackTitle?: string;
+}
+
+const { seo, fallbackTitle } = Astro.props;
+const title = seo?.title ?? fallbackTitle ?? "POC Test site";
+const description = seo?.description ?? "";
+const ogImage = seo?.og_image ?? "";
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>{title}</title>
+		{description && <meta name="description" content={description} />}
+		<meta property="og:title" content={title} />
+		{description && <meta property="og:description" content={description} />}
+		{ogImage && <meta property="og:image" content={ogImage} />}
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>

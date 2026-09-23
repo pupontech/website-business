@@ -1,0 +1,11 @@
+$ astro check
+exit=0
+
+20:41:29 [types] Generated 87ms
+20:41:29 [check] Getting diagnostics for Astro files in /root/Projects/website-business/pocs/phase-2/storyblok/harness...
+Result (7 files): 
+- 0 errors
+- 0 warnings
+- 0 hints
+
+

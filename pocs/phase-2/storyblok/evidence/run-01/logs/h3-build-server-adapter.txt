@@ -1,0 +1,21 @@
+$ astro build [env: POC_ASTRO_OUTPUT]
+exit=0
+
+20:41:33 [@astrojs/node] Enabling sessions with filesystem storage
+20:41:33 [vite] Re-optimizing dependencies because vite config has changed
+20:41:34 [types] Generated 192ms
+20:41:34 [build] output: "server"
+20:41:34 [build] mode: "server"
+20:41:34 [build] directory: /root/Projects/website-business/pocs/phase-2/storyblok/harness/dist/
+20:41:34 [build] adapter: @astrojs/node
+20:41:34 [build] Collecting build info...
+20:41:34 [build] ✓ Completed in 223ms.
+20:41:34 [build] Building server entrypoints...
+20:41:34 [vite] ✓ built in 242ms
+20:41:34 [vite] ✓ built in 297ms
+20:41:34 [vite] ✓ built in 54ms
+20:41:34 [build] Rearranging server assets...
+20:41:34 [build] ✓ Completed in 631ms.
+20:41:34 [build] Server built in 858ms
+20:41:34 [build] Complete!
+
