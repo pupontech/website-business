@@ -64,3 +64,12 @@ Decision states: **Provisional**, **Approved**, **Superseded**, **Rejected**. Re
 - **Relevant sources:** `docs/01-business.md` §§1, 4, and 7; `research/phase-1/business-model.md`; public competitor evidence in `research/phase-1/competitors.md`.
 - **Date:** 2026-09-22.
 - **Approval status:** Provisional until Checkpoint 1.
+
+## D-008 — Native Ghost and managed publication hosting as the proposed default
+
+- **Decision:** Propose client-owned Ghost(Pro) with a native Ghost theme for normal publication work. A custom or premium theme requires Publisher or a higher qualifying plan. Self-hosting and headless Ghost require separately justified and priced operating/rebuild plans.
+- **Reasoning:** Native themes retain Ghost's publication, membership, Portal, newsletter, archive, and SEO frontend behavior. Ghost(Pro) includes managed platform and email duties; a self-hosted VPS invoice omits mail, database, backups, edge, monitoring, updates, incident response, and labour. Documentation-backed headless membership and Portal limitations remain unresolved by runtime proof.
+- **Alternatives considered:** Ghost(Pro) Starter with an uploaded custom theme (plan-gated), default self-hosting, and headless Astro for every Ghost publication.
+- **Relevant sources:** `docs/03-ghost.md` §§2–6, 9; `research/phase-3/hosting-operations.md`; `research/phase-3/themes-product-headless-backup.md`; final review `research/phase-3/final-review.md`.
+- **Date:** 2026-09-23.
+- **Approval status:** Provisional until Checkpoint 1; no Ghost account or production operation authorized.

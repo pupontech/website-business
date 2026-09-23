@@ -349,7 +349,7 @@ Deferral list (**RECOMMENDATION**), each with the reason and the governing refer
 - L4: Four agency offering pages [14][15][16][17] are used as *public pattern* evidence only. They are single examples, not a sample; they are attributed, not generalised, and no competitor's private process or pricing is inferred.
 - L5: EUR-Lex article bodies were not retrievable from this workspace (HTTP 202 with empty body on direct fetch), so the GDPR / EDPB / EAA claims in section 7.4 are limited to document existence, force, and page-level content that was actually read.
 - L6: This document writes no prices, no dates for pricing approval, and no client-facing template text; those belong to P4.
-- L7: Two first-party Ghost pages retrieved the same day quote different entry figures for Ghost(Pro): the pricing page lists Starter at **$18/mo billed yearly** [1], while the hosting comparison table quotes Ghost(Pro) base hosting "From **$15**/mo" [2]. Both were read as published; the discrepancy is recorded rather than resolved, and any client-facing cost figure must be re-retrieved at use.
+- L7: The first automated extraction of the Ghost pricing page displayed Starter at **$18/mo** with a "Billed yearly" label [1], while Ghost's hosting comparison quoted "From **$15**/mo" [2]. A later live billing-toggle observation on 2026-09-22 (recorded in `docs/03-ghost.md` §9 and corrected in `docs/01-business.md`) showed **$15/mo billed yearly** and **$18/mo billed monthly** for Starter at the 1,000-member band. The automated label remains a reproducible rendering conflict, not the annual-billing basis for future quotes; re-retrieve and select billing frequency before use.
 
 ---
 
@@ -357,7 +357,7 @@ Deferral list (**RECOMMENDATION**), each with the reason and the governing refer
 
 All URLs retrieved 2026-09-22 unless a different date is stated. Volatile prices/limits carry their retrieval date inline.
 
-1. Ghost — Ghost(Pro) plans & pricing. https://ghost.org/pricing/ (Starter $18/mo, Publisher $29/mo, Business $199/mo billed yearly; Custom plan carries the 99.9% uptime SLA; custom themes and paid subscriptions unavailable on Starter; automated backups, SSL, worldwide CDN, weekly automatic updates; file-upload limits per tier.) — retrieved 2026-09-22.
+1. Ghost — Ghost(Pro) plans & pricing. https://ghost.org/pricing/ (initial extraction showed Starter $18/mo with a "Billed yearly" label; later live toggle at 1,000 members showed Starter $15/mo, Publisher $29/mo, Business $199/mo billed yearly, and Starter $18/mo billed monthly; Custom plan carries the 99.9% uptime SLA; custom themes and paid subscriptions unavailable on Starter; automated backups, SSL, worldwide CDN, weekly automatic updates; file-upload limits per tier.) — retrieved 2026-09-22.
 2. Ghost — Hosting Ghost (Ghost(Pro) vs self-hosting comparison; supported self-hosting stack; hardening guidance; ActivityPub usage limits; "weekly updates/backups/security/performed for you" on Ghost(Pro)). https://docs.ghost.org/hosting — retrieved 2026-09-22.
 3. Ghost — How to install Ghost on Ubuntu (server prerequisites, ≥1 GB memory, domain/DNS prerequisite, non-root user). https://docs.ghost.org/install/ubuntu — retrieved 2026-09-22.
 4. Astro — Why Astro? (content-driven, server-first, zero JS by default, islands). https://docs.astro.build/en/concepts/why-astro/ — retrieved 2026-09-22.
