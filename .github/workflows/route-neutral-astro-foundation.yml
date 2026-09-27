@@ -1,0 +1,196 @@
+name: Route-neutral Astro foundation
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Isolated foundation verification
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout only the approved sparse paths
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            site/
+            .github/workflows/route-neutral-astro-foundation.yml
+          sparse-checkout-cone-mode: false
+
+      - name: Verify sparse-checkout settings and materialized paths
+        run: |
+          set -euo pipefail
+          fail() {
+            printf '%s\n' 'Checkout isolation check failed.' >&2
+            exit 1
+          }
+
+          [[ "$(git config --local --bool --get core.sparseCheckout 2>/dev/null)" == 'true' ]] || fail
+          [[ "$(git config --local --bool --get core.sparseCheckoutCone 2>/dev/null)" == 'false' ]] || fail
+
+          expected_patterns=$'site/\n.github/workflows/route-neutral-astro-foundation.yml'
+          actual_patterns="$(git sparse-checkout list 2>/dev/null)" || fail
+          [[ "$actual_patterns" == "$expected_patterns" ]] || fail
+
+          python3 - <<'PY' || fail
+          import os
+          import stat
+          import sys
+
+          expected_directories = {
+              ".github",
+              ".github/workflows",
+              "site",
+              "site/scripts",
+              "site/src",
+              "site/src/pages",
+              "site/src/styles",
+              "site/tests",
+          }
+          expected_files = {
+              ".github/workflows/route-neutral-astro-foundation.yml",
+              "site/.gitignore",
+              "site/.nvmrc",
+              "site/astro.config.mjs",
+              "site/package-lock.json",
+              "site/package.json",
+              "site/playwright.config.ts",
+              "site/scripts/verify-scope.mjs",
+              "site/src/pages/index.astro",
+              "site/src/styles/global.css",
+              "site/tests/foundation-accessibility.spec.ts",
+              "site/tsconfig.json",
+          }
+          expected_paths = expected_directories | expected_files
+          materialized_paths = set()
+
+          def fail():
+              raise RuntimeError
+
+          def inventory(directory="", relative=""):
+              try:
+                  entries = os.scandir(directory or ".")
+                  with entries:
+                      for entry in entries:
+                          child = entry.name if not relative else f"{relative}/{entry.name}"
+                          if not relative and child == ".git":
+                              if not stat.S_ISDIR(entry.stat(follow_symlinks=False).st_mode):
+                                  fail()
+                              continue
+
+                          metadata = entry.stat(follow_symlinks=False)
+                          if stat.S_ISLNK(metadata.st_mode):
+                              fail()
+                          materialized_paths.add(child)
+                          if child in expected_directories:
+                              if not stat.S_ISDIR(metadata.st_mode):
+                                  fail()
+                              inventory(entry.path, child)
+                          elif child in expected_files:
+                              if not stat.S_ISREG(metadata.st_mode):
+                                  fail()
+                          else:
+                              fail()
+              except Exception:
+                  fail()
+
+          inventory()
+          if materialized_paths != expected_paths:
+              sys.exit(1)
+          PY
+
+      - name: Install pinned Gitleaks and scan allowlisted source paths
+        run: |
+          set -euo pipefail
+          version='8.30.1'
+          archive="$RUNNER_TEMP/gitleaks_${version}_linux_x64.tar.gz"
+          install_dir="$RUNNER_TEMP/gitleaks"
+          archive_url="https://github.com/gitleaks/gitleaks/releases/download/v${version}/gitleaks_${version}_linux_x64.tar.gz"
+          checksum='551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb'
+
+          if ! curl --fail --location --silent --show-error --output "$archive" "$archive_url"; then
+            printf '%s\n' 'Gitleaks download failed.' >&2
+            exit 1
+          fi
+          if ! printf '%s  %s\n' "$checksum" "$archive" | sha256sum --check --status; then
+            printf '%s\n' 'Gitleaks checksum verification failed.' >&2
+            exit 1
+          fi
+          mkdir -p "$install_dir"
+          if ! tar -xzf "$archive" -C "$install_dir" gitleaks; then
+            printf '%s\n' 'Gitleaks extraction failed.' >&2
+            exit 1
+          fi
+          chmod 0755 "$install_dir/gitleaks"
+          "$install_dir/gitleaks" version
+
+          scan_paths=(
+            'site/.gitignore'
+            'site/.nvmrc'
+            'site/package.json'
+            'site/package-lock.json'
+            'site/astro.config.mjs'
+            'site/tsconfig.json'
+            'site/src/'
+            'site/scripts/'
+            'site/playwright.config.ts'
+            'site/tests/'
+            '.github/workflows/route-neutral-astro-foundation.yml'
+          )
+          for path in "${scan_paths[@]}"; do
+            if ! env -u GITLEAKS_CONFIG -u GITLEAKS_CONFIG_TOML "$install_dir/gitleaks" dir --redact=100 "$path"; then
+              printf '%s\n' 'Gitleaks scan failed (finding or scanner error).' >&2
+              exit 1
+            fi
+          done
+          printf '%s\n' 'Gitleaks scans passed for all 11 allowlisted paths.'
+
+      - name: Set up the exact Node.js version
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: site/.nvmrc
+          check-latest: false
+          package-manager-cache: false
+          token: ''
+
+      - name: Install locked dependencies
+        working-directory: site
+        run: npm ci
+
+      - name: Audit all dependencies
+        working-directory: site
+        run: npm audit --include=dev --audit-level=low
+
+      - name: Install the locked Playwright Chromium browser
+        working-directory: site
+        run: ./node_modules/.bin/playwright install chromium
+
+      - name: Check Astro and TypeScript
+        working-directory: site
+        run: npm run check
+
+      - name: Verify source scope
+        working-directory: site
+        run: npm run test:scope:source
+
+      - name: Build static output
+        working-directory: site
+        run: npm run build
+
+      - name: Verify built output scope
+        working-directory: site
+        run: npm run test:scope:output
+
+      - name: Run local-page accessibility checks
+        working-directory: site
+        run: npm run test:a11y
