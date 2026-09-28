@@ -1,0 +1,31 @@
+---
+import "../styles/global.css";
+import DraftBanner from "../components/DraftBanner.astro";
+import PrimaryNav from "../components/PrimaryNav.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+interface Props { title: string; }
+const { title } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <DraftBanner />
+    <header class="site-header">
+      <div class="header-inner">
+        <span class="site-name">[Agency name — placeholder]</span>
+        <PrimaryNav />
+      </div>
+    </header>
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+    <SiteFooter />
+  </body>
+</html>

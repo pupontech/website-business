@@ -19,7 +19,7 @@ const viewports = [
   { width: 1440, height: 900, screenshot: "desktop-1440x900.png" },
 ];
 
-test.describe("route-neutral foundation accessibility", () => {
+test.describe("agency draft Home accessibility regression", () => {
   for (const viewport of viewports) {
     test(`has no axe WCAG 2.0/2.1/2.2 A/AA violations at ${viewport.width}px`, async ({ page }) => {
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
@@ -30,7 +30,7 @@ test.describe("route-neutral foundation accessibility", () => {
       await expect(
         page.getByRole("heading", {
           level: 1,
-          name: "Local foundation demonstration",
+          name: "Home — private draft",
         }),
       ).toBeVisible();
 

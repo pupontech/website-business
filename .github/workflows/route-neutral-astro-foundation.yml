@@ -1,4 +1,4 @@
-name: Route-neutral Astro foundation
+name: Local agency draft verification
 
 on:
   push:
@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   verify:
-    name: Isolated foundation verification
+    name: Isolated agency draft verification
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     permissions:
@@ -58,6 +58,8 @@ jobs:
               "site",
               "site/scripts",
               "site/src",
+              "site/src/components",
+              "site/src/layouts",
               "site/src/pages",
               "site/src/styles",
               "site/tests",
@@ -71,8 +73,15 @@ jobs:
               "site/package.json",
               "site/playwright.config.ts",
               "site/scripts/verify-scope.mjs",
+              "site/src/components/DraftBanner.astro",
+              "site/src/components/PrimaryNav.astro",
+              "site/src/components/SiteFooter.astro",
+              "site/src/layouts/AgencyDraftLayout.astro",
+              "site/src/pages/contact.astro",
               "site/src/pages/index.astro",
+              "site/src/pages/services.astro",
               "site/src/styles/global.css",
+              "site/tests/agency-draft.spec.ts",
               "site/tests/foundation-accessibility.spec.ts",
               "site/tsconfig.json",
           }
@@ -174,7 +183,7 @@ jobs:
 
       - name: Install locked dependencies
         working-directory: site
-        run: npm ci
+        run: npm ci --include=dev
 
       - name: Audit all dependencies
         working-directory: site
