@@ -37,12 +37,12 @@ jobs:
 
           # Git's sparse-checkout configuration can live in config.worktree;
           # effective lookups must not force --local (config alone).
-          [[ "$(git config --bool --get core.sparseCheckout 2>/dev/null)" == 'true' ]] || fail
-          [[ "$(git config --bool --get core.sparseCheckoutCone 2>/dev/null)" == 'false' ]] || fail
+          [[ "$(git config --bool --get core.sparseCheckout 2>/dev/null)" == 'true' ]] || { printf '%s\n' 'Sparse checkout disabled.' >&2; fail; }
+          [[ "$(git config --bool --get core.sparseCheckoutCone 2>/dev/null)" == 'false' ]] || { printf '%s\n' 'Cone mode not disabled.' >&2; fail; }
 
           expected_patterns=$'site/\n.github/workflows/route-neutral-astro-foundation.yml'
           actual_patterns="$(git sparse-checkout list 2>/dev/null)" || fail
-          [[ "$actual_patterns" == "$expected_patterns" ]] || fail
+          [[ "$actual_patterns" == "$expected_patterns" ]] || { printf '%s\n' 'Sparse patterns differ from the allowlist.' >&2; fail; }
 
           python3 - <<'PY' || fail
           import os
@@ -76,7 +76,8 @@ jobs:
           expected_paths = expected_directories | expected_files
           materialized_paths = set()
 
-          def fail():
+          def fail(path="inventory"):
+              print(f"Checkout inventory rejected: {path}", file=sys.stderr)
               raise RuntimeError
 
           def inventory(directory="", relative=""):
@@ -102,12 +103,15 @@ jobs:
                               if not stat.S_ISREG(metadata.st_mode):
                                   fail()
                           else:
-                              fail()
+                              fail(child)
               except Exception:
-                  fail()
+                  raise
 
           inventory()
           if materialized_paths != expected_paths:
+              print("Checkout inventory differs from the allowlist.", file=sys.stderr)
+              print(f"Missing paths: {sorted(expected_paths - materialized_paths)}", file=sys.stderr)
+              print(f"Unexpected paths: {sorted(materialized_paths - expected_paths)}", file=sys.stderr)
               sys.exit(1)
           PY
 
