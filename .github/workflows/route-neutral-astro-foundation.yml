@@ -38,7 +38,10 @@ jobs:
           # Git's sparse-checkout configuration can live in config.worktree;
           # effective lookups must not force --local (config alone).
           [[ "$(git config --bool --get core.sparseCheckout 2>/dev/null)" == 'true' ]] || { printf '%s\n' 'Sparse checkout disabled.' >&2; fail; }
-          [[ "$(git config --bool --get core.sparseCheckoutCone 2>/dev/null)" == 'false' ]] || { printf '%s\n' 'Cone mode not disabled.' >&2; fail; }
+          # An unset cone-mode key is Git's non-cone default. The exact pattern
+          # list and complete materialized-file inventory are checked below.
+          cone_mode="$(git config --bool --get core.sparseCheckoutCone 2>/dev/null || true)"
+          [[ -z "$cone_mode" || "$cone_mode" == 'false' ]] || { printf '%s\n' 'Cone mode enabled.' >&2; fail; }
 
           expected_patterns=$'site/\n.github/workflows/route-neutral-astro-foundation.yml'
           actual_patterns="$(git sparse-checkout list 2>/dev/null)" || fail
