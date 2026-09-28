@@ -1,0 +1,26 @@
+{
+  "name": "route-neutral-astro-foundation",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "check": "astro check",
+    "test:scope:source": "node scripts/verify-scope.mjs --source",
+    "test:scope:output": "node scripts/verify-scope.mjs --output",
+    "test:a11y": "playwright test",
+    "build": "astro build",
+    "preview": "astro preview",
+    "playwright:install:chromium": "playwright install chromium"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.63.0",
+    "astro": "7.3.5",
+    "typescript": "6.0.3"
+  }
+}
