@@ -1,23 +1,18 @@
 ---
-import "../styles/global.css";
+import AgencyDraftLayout from "../layouts/AgencyDraftLayout.astro";
 ---
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="noindex,nofollow" />
-    <title>Local foundation demonstration</title>
-  </head>
-  <body>
-    <header>
-      <a class="skip-link" href="#main-content">Skip to main content</a>
-    </header>
-    <main id="main-content" tabindex="-1">
-      <h1>Local foundation demonstration</h1>
-      <p>Synthetic demonstration content — not an agency website or client work.</p>
-      <p>This local page verifies the static Astro shell only.</p>
-    </main>
-    <footer></footer>
-  </body>
-</html>
+<AgencyDraftLayout title="Home — private draft">
+  <section class="intro">
+    <p class="eyebrow">01 / Private draft</p>
+    <h1>Home — private draft</h1>
+    <p class="lede">[Agency introduction — content needed]</p>
+    <div class="text-links">
+      <a href="/services/">View draft service areas <span aria-hidden="true">→</span></a>
+      <a href="/contact/">View contact status <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+  <section class="content-block quiet-block" aria-label="Draft positioning">
+    <p class="section-kicker">Content pending review</p>
+    <p>[Positioning and audience copy — content needed]</p>
+  </section>
+</AgencyDraftLayout>
